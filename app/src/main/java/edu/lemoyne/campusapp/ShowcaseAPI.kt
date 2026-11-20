@@ -14,13 +14,11 @@ interface ShowcaseApi {
 
 object ShowcaseService {
     const val API_KEY = "sb_publishable_U5scuRzqQFJN8_2jiVfjuQ_fjZVuqln"
-    const val BASE_URL = "https://cbjyrbxmffttdwvrkwfu.supabase.co"
+    const val BASE_URL = "https://cbjyrbxmffttdwvrkwfu.supabase.co/"
 
     val api: ShowcaseApi = Retrofit.Builder()
         .baseUrl(BASE_URL)
-        .addConvertedFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(ShowcaseApi::class.java)
-
-
 }
