@@ -11,21 +11,30 @@ import androidx.compose.ui.Modifier
 @Composable
 fun CampusAppScreen(
     showcaseState: ShowcaseUiState,
+    loginState: LoginUiState,
     onRefreshShowcase: () -> Unit,
+    onLogin: (String, String, () -> Unit) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var currentScreen by remember { mutableStateOf("home") }
 
     when (currentScreen) {
-        "supabase" -> InterestsScreen(
+        "login" -> LoginScreen(
+            state = loginState,
+            onLogin = { email, password ->
+                onLogin(email, password) { currentScreen = "interests" }
+            },
+            modifier = modifier
+        )
+        "interests" -> InterestsScreen(
             state = showcaseState,
+            onRefresh = onRefreshShowcase,
             onBack = { currentScreen = "home" },
-            onRefresh = onRefreshShowcase, // Lab 21: Task 1
             modifier = modifier
         )
         else -> HomeScreen(
             modifier = modifier,
-            onSupabase = { currentScreen = "supabase" }
+            onInterestsClick = { currentScreen = "login" }
         )
     }
 }

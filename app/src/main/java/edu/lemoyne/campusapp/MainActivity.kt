@@ -27,17 +27,27 @@ import edu.lemoyne.campusapp.ui.theme.CampusAppTheme
 
 class MainActivity : ComponentActivity() {
     private val showcaseViewModel: ShowcaseViewModel by viewModels()
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             val showcaseState by showcaseViewModel.state.collectAsStateWithLifecycle()
+            val loginState by loginViewModel.state.collectAsStateWithLifecycle()
             CampusAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     CampusAppScreen(
                         showcaseState = showcaseState,
+                        loginState = loginState,
                         onRefreshShowcase = showcaseViewModel::refresh,
+                        onLogin = { email, password, navigate ->
+                            loginViewModel.login(email, password) { token ->
+                                showcaseViewModel.setAccessToken(token)
+                                showcaseViewModel.refresh()
+                                navigate()
+                            }
+                        },
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -48,7 +58,7 @@ class MainActivity : ComponentActivity() {
 
 // --- Class 6 · Step 1: my own screen ---
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, onSupabase: () -> Unit = {}) {
+fun HomeScreen(modifier: Modifier = Modifier, onInterestsClick: () -> Unit = {}) {
     // --- Class 6 · Step 3: a column, so things stack ---
     Column(
         modifier = modifier
@@ -69,7 +79,7 @@ fun HomeScreen(modifier: Modifier = Modifier, onSupabase: () -> Unit = {}) {
         Text(text = "Review class notes", fontSize = 18.sp)
         Text(text = "Stretch after practice", fontSize = 18.sp)
         Spacer(modifier = Modifier.height(24.dp))
-        Button(onClick = onSupabase) { Text("Open Supabase") }
+        Button(onClick = onInterestsClick) { Text("My Interests") }
     }
 }
 
