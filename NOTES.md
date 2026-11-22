@@ -4,7 +4,7 @@
 
 3. In dark mode the status bar icons were almost invisible in one screenshot but white in the next. I don't understand what controls their colour or why it changed.
 
-## Week 13, Wednesday: Lab 21
+## Week 13, Wednesday: Lab21
 
 1. When InterestsScreen first opens, a LaunchedEffect(Unit) at the top of the screen runs and calls onRefresh(), which is showcaseViewModel.refresh. I think it only runs once when the screen shows up, not every time it redraws.
 
@@ -15,3 +15,8 @@
 4. A successful [] means the request worked and Supabase just had no rows, so the app shows "No items yet." A network failure means the request never got an answer, so the app catches the error and shows the Error message instead.
 
 5. Both my website and my Android app read the same showcase_items table in my Supabase project, using the same URL and publishable key. I compared a couple of titles on interests.html with the Android screen, and they matched.
+
+
+## Week 13, Friday: S22
+## AI use
+- Used an AI tool to explain the Retrofit/Compose structure, to debug compile errors and to sort out my git branches.
